@@ -13,8 +13,6 @@ export default class Env {
   private constructor() {
     this.firebase = firebase.initializeApp(FIREBASE_CONFIG);
     this.firestore = this.firebase.firestore();
-    const settings = { timestampsInSnapshots: true };
-    this.firestore.settings(settings);
   }
 
   public static get instance(): Env {

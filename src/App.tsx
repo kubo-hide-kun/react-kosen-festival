@@ -1,8 +1,19 @@
 import React from 'react';
+import * as BootStrap from 'react-bootstrap';
 import logo from './logo.svg';
 import './App.css';
+import Env from "./firebase"
 
 const App: React.FC = () => {
+
+  const login = React.useCallback(() => {
+      Env.instance.firebase
+        .auth()
+        .getRedirectResult()
+        .then(result => {console.log(result)})
+        .catch(error => {console.log(error)});
+    },[]);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +21,10 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+
+        <BootStrap.Button onClick={login}>
+          login
+        </BootStrap.Button>
       </header>
     </div>
   );
