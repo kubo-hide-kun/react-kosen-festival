@@ -20,6 +20,7 @@
 
 # firebase
 .firebase
+src/firebase/config.tsx
 
 npm-debug.log*
 yarn-debug.log*
