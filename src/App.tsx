@@ -6,6 +6,8 @@ import Env from "./firebase"
 
 const App: React.FC = () => {
 
+  const [user, setUser] = React.useState('dummy_user');
+
   const login = React.useCallback(() => {
     Env.instance.firebase
       .auth()
@@ -20,6 +22,15 @@ const App: React.FC = () => {
       });
   },[]);
 
+  const insertUserData = React.useCallback(()=>{
+    Env.instance.firestore
+      .collection("users")
+      .doc(user)
+      .set({ pt:0 })
+      .then(() => alert("Success: Document has written"))
+      .catch(error => alert("Error writing document: "+ error));
+  },[])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -27,9 +38,12 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-
         <BootStrap.Button onClick={login}>
           login
+        </BootStrap.Button>
+
+        <BootStrap.Button onClick={insertUserData}>
+          insert
         </BootStrap.Button>
       </header>
     </div>
