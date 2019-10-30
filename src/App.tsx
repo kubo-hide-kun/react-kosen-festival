@@ -7,12 +7,18 @@ import Env from "./firebase"
 const App: React.FC = () => {
 
   const login = React.useCallback(() => {
-      Env.instance.firebase
-        .auth()
-        .getRedirectResult()
-        .then(result => {console.log(result)})
-        .catch(error => {console.log(error)});
-    },[]);
+    Env.instance.firebase
+      .auth()
+      .signInWithPopup(Env.instance.providerGoogle)
+      .then(result => { 
+        console.log("AC:");
+        console.log(result);
+      })
+      .catch(error => {
+        console.log("WA:");
+        console.log(error);
+      });
+  },[]);
 
   return (
     <div className="App">
