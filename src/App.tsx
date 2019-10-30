@@ -12,14 +12,8 @@ const App: React.FC = () => {
     Env.instance.firebase
       .auth()
       .signInWithPopup(Env.instance.providerGoogle)
-      .then(result => { 
-        console.log("AC:");
-        console.log(result);
-      })
-      .catch(error => {
-        console.log("WA:");
-        console.log(error);
-      });
+      .then(result => console.log(result))
+      .catch(error => console.log(error));
   },[]);
 
   const insertUserData = React.useCallback(()=>{
