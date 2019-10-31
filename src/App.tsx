@@ -25,6 +25,18 @@ const App: React.FC = () => {
       .catch(error => alert("Error writing document: "+ error));
   },[])
 
+  const showUserData = React.useCallback(()=>{
+    Env.instance.firestore
+      .collection("users")
+      .get()
+      .then(result => {
+        result.docs.forEach(
+          doc => console.log(doc.id,'=>',doc.data())
+        );
+      })
+      .catch(error => console.log(error))
+  },[])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -37,6 +49,10 @@ const App: React.FC = () => {
         </BootStrap.Button>
 
         <BootStrap.Button onClick={insertUserData}>
+          insert
+        </BootStrap.Button>
+
+        <BootStrap.Button onClick={showUserData}>
           insert
         </BootStrap.Button>
       </header>
