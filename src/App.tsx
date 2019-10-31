@@ -8,10 +8,14 @@ const App: React.FC = () => {
 
   const [user, setUser] = React.useState('dummy_user');
   const [userList, setUserList] = React.useState<{name:string, pt:number}[]>([]);
+  const [reanderList, setReanderList] = React.useState<JSX.Element[]>([]);
 
   React.useEffect(() => {
     console.log(userList)
-  }, [userList])
+    setReanderList(userList.map(user => {
+      return <li>{user.name} || {user.pt}</li>
+    }));
+  }, [userList]);
 
   const login = React.useCallback(() => {
     Env.instance.firebase
@@ -41,24 +45,26 @@ const App: React.FC = () => {
   },[])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <BootStrap.Button onClick={login}>
-          login
-        </BootStrap.Button>
+    <div>
+      <p>
+        Edit <code>src/App.tsx</code> and save to reload.
+      </p>
+      <div>
+      <BootStrap.Button onClick={login}>
+        login
+      </BootStrap.Button>
 
-        <BootStrap.Button onClick={insertUserData}>
-          insert
-        </BootStrap.Button>
+      <BootStrap.Button onClick={insertUserData}>
+        insert
+      </BootStrap.Button>
 
-        <BootStrap.Button onClick={getAllUserData}>
-          get user list
-        </BootStrap.Button>
-      </header>
+      <BootStrap.Button onClick={getAllUserData}>
+        get user list
+      </BootStrap.Button>
+      </div>
+      <ul>
+        {reanderList}
+      </ul>
     </div>
   );
 }
