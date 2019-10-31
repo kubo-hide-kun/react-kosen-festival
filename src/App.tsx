@@ -7,6 +7,11 @@ import Env from "./firebase"
 const App: React.FC = () => {
 
   const [user, setUser] = React.useState('dummy_user');
+  const [userList, setUserList] = React.useState<{name:string, pt:number}[]>([]);
+
+  React.useEffect(() => {
+    console.log(userList)
+  }, [userList])
 
   const login = React.useCallback(() => {
     Env.instance.firebase
@@ -25,14 +30,12 @@ const App: React.FC = () => {
       .catch(error => alert("Error writing document: "+ error));
   },[])
 
-  const showUserData = React.useCallback(()=>{
+  const getAllUserData = React.useCallback(()=>{
     Env.instance.firestore
       .collection("users")
       .get()
       .then(result => {
-        result.docs.forEach(
-          doc => console.log(doc.id,'=>',doc.data())
-        );
+        setUserList(result.docs.map(doc => {return {name:doc.id,pt:doc.data().pt}}));
       })
       .catch(error => console.log(error))
   },[])
@@ -52,8 +55,8 @@ const App: React.FC = () => {
           insert
         </BootStrap.Button>
 
-        <BootStrap.Button onClick={showUserData}>
-          insert
+        <BootStrap.Button onClick={getAllUserData}>
+          get user list
         </BootStrap.Button>
       </header>
     </div>
