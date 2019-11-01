@@ -1,11 +1,12 @@
 import React,{useState, useEffect, useCallback} from 'react';
 import Loading from './components/Loading'
+import UserLine from './components/userLine';
 import './App.css';
 import Env from "./firebase"
 
 const App: React.FC = () => {
 
-  const [isSignin, setIsSignin] = useState<boolean>(false);
+  const [isSigned, setIsSigned] = useState<boolean>(false);
   const [passwd, setPasswd] = useState<string>('');
 
   const [user, setUser] = useState<string>('dummy_user');
@@ -17,11 +18,12 @@ const App: React.FC = () => {
   useEffect(() => {
     console.log(userList)
     setReanderList(userList.map(user => (
-      <li>
-        {user.name} => {user.pt}pt 
-        <input type="number" />
-        <button onClick={() => updateUserData(user.name,user.pt+100)}>+</button>
-      </li>
+      <UserLine
+        name={user.name}
+        pt={user.pt}
+        updateUserData={updateUserData}
+        isSigned={isSigned}
+      />
       )
     ));
   }, [userList]);
@@ -41,7 +43,8 @@ const App: React.FC = () => {
   },[]);
 
   const unlockAdmin = useCallback(() => {
-    setIsSignin(passwd == 'inu0903');
+    setIsSigned(passwd == 'inu0903');
+    getAllUserData();
   },[passwd]);
 
   const updateUserData = useCallback((name:string, pt:number)=>{
@@ -105,7 +108,7 @@ const App: React.FC = () => {
         Edit <code>src/App.tsx</code> and save to reload.
       </p>
       {
-        isSignin
+        isSigned
         ?[
           <input type="text" name="name" onChange={e => setUser(e.target.value)}/>,
           <button onClick={insertUserData}>insert</button>
@@ -124,9 +127,7 @@ const App: React.FC = () => {
         get user list
       </button>
       </div>
-      <ul>
-        {reanderList}
-      </ul>
+      {reanderList}
     </div>
   );
 }
