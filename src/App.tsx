@@ -31,20 +31,6 @@ const App: React.FC = () => {
     ));
   }, [userList]);
 
-  const login = useCallback(() => {
-    setIsLoading(true);
-    Env.instance.firebase
-      .auth()
-      .signInWithPopup(Env.instance.providerGoogle)
-      .then(result => {
-        console.log(result);
-        setIsLoading(false);
-      }).catch(error => {
-        console.log(error);
-        setIsLoading(false);
-      });
-  },[]);
-
   const unlockAdmin = useCallback(() => {
     setIsSigned(passwd == 'inuadmin');
     setUser('');
@@ -182,10 +168,6 @@ const App: React.FC = () => {
       }
 
       <div>
-      <YButton onClick={login}>
-        login
-      </YButton>
-
       <YButton onClick={sortList}>
         sort
       </YButton>
