@@ -18,8 +18,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log(userList,"1.")
-    setReanderList(userList.map(user => (
+    setReanderList(userList.map((user,index) => (
       <UserLine
+        deleteUserData={deleteUserData}
+        index={index}
         name={user.name}
         pt={user.pt}
         updateUserData={updateUserData}
@@ -44,13 +46,29 @@ const App: React.FC = () => {
   },[]);
 
   const unlockAdmin = useCallback(() => {
-    setIsSigned(passwd == 'inu0903');
+    setIsSigned(passwd == 'inuadmin');
     setUser('');
     setPasswd('');
     console.log(user);
     console.log(passwd);
     getAllUserData();
   },[passwd]);
+
+  const deleteUserData = useCallback((name:string)=>{
+    setIsLoading(true);
+    Env.instance.firestore
+      .collection("users")
+      .doc(name)
+      .delete()
+      .then(() => {
+        console.log("Success: Document has written");
+        getAllUserData();
+        setIsLoading(false);
+      }).catch(error => {
+        console.log("Error writing document: "+ error)
+        setIsLoading(true);
+      });
+  },[])
 
   const updateUserData = useCallback((name:string, pt:number)=>{
     setIsLoading(true);
@@ -118,11 +136,13 @@ const App: React.FC = () => {
         return a.pt < b.pt ? 1 : -1;
       })
     );
-    setReanderList(userList.map(user => (
+    setReanderList(userList.map((user,index) => (
       <UserLine
+        index={index}
         name={user.name}
         pt={user.pt}
         updateUserData={updateUserData}
+        deleteUserData={deleteUserData}
         isSigned={isSigned}
       />
     )))
