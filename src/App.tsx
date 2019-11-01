@@ -143,7 +143,7 @@ const App: React.FC = () => {
     <MainBack>
       {isLoading && <Loading />}
       <p>
-        KOSEN FESTIVAL IN 4th INFORMATION
+        Vrtual medal
       </p>
       {
         isSigned
@@ -186,15 +186,15 @@ const MainBack = styled.div`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: yellow
-  z-index: 250
-  font-family: 'arial black'	
+  background: yellow;
+  z-index: 250;
+  font-family: 'arial black', sans-serif;
 `;
 
 const YButton = styled.button`
   background: black;
   color: white;
-  font-family: 'Impact';
+  font-family: 'Impact', sans-serif;
   margin: 2px;
   padding: 10px;
   width: 20%;

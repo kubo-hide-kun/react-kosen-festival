@@ -41,7 +41,7 @@ const Ynum = styled.div`
   display: inline-block;
   background: black;
   color: white;
-  font-family: 'Impact';
+  font-family: 'Impact', sans-serif;
   margin: 5px 2px;
   padding: 10px;
   width: 10%;
@@ -51,7 +51,7 @@ const YLine = styled.div`
   display: inline-block;
   background: black;
   color: white;
-  font-family: 'Impact';
+  font-family: 'Impact', sans-serif;
   margin: 5px 2px;
   padding: 10px;
   width: 45%;
@@ -61,7 +61,7 @@ const Ypt = styled.div`
   display: inline-block;
   background: black;
   color: white;
-  font-family: 'Impact';
+  font-family: 'Impact', sans-serif;
   margin: 5px 2px;
   padding: 10px;
   width: 15%;
@@ -76,6 +76,6 @@ const YInput = styled.input`
 
 const YButton = styled.p`
   display: inline-block;
-  font-family: 'Impact';
+  font-family: 'Impact', sans-serif;
   margin: 0 5px;
 `;
