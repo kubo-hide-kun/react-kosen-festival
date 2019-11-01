@@ -1,4 +1,5 @@
 import React,{useState, useEffect, useCallback} from 'react';
+import Loading from './components/Loading'
 import './App.css';
 import Env from "./firebase"
 
@@ -99,7 +100,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      {isLoading && <p>test</p>}
+      {isLoading && <Loading />}
       <p>
         Edit <code>src/App.tsx</code> and save to reload.
       </p>
