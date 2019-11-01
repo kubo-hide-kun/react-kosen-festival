@@ -1,6 +1,4 @@
 import React,{useState, useEffect, useCallback} from 'react';
-import * as BootStrap from 'react-bootstrap';
-import logo from './logo.svg';
 import './App.css';
 import Env from "./firebase"
 
