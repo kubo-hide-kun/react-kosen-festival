@@ -68,11 +68,14 @@ const Ypt = styled.div`
 `;
 
 const YInput = styled.input`
+  display: inline-block;
   padding: 10px;
   margin: 5px 2px;
   border-color: black;
 `;
 
-const YButton = styled.button`
-    font-family: 'Impact';
+const YButton = styled.p`
+  display: inline-block;
+  font-family: 'Impact';
+  margin: 0 5px;
 `;

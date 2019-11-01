@@ -168,7 +168,6 @@ const App: React.FC = () => {
             placeholder="追加するユーザーを入力"
             onChange={e => setUser(e.target.value)}
           />,
-          <YButton onClick={retireAdmin}>retire admin</YButton>,
           <YButton onClick={insertUserData}>insert</YButton>
         ]:[
           <p></p>,
@@ -178,7 +177,7 @@ const App: React.FC = () => {
             placeholder="パスワードを入力"
             onChange={e => setPasswd(e.target.value)}
           />,
-          <YButton onClick={unlockAdmin}>Get admin</YButton>
+          <YButton onClick={unlockAdmin}>admin</YButton>
         ]
       }
 
@@ -192,8 +191,9 @@ const App: React.FC = () => {
       </YButton>
 
       <YButton onClick={getAllUserData}>
-        get user list
+        reload
       </YButton>
+      {isSigned && <YButton onClick={retireAdmin}>retire</YButton>}
       </div>
       {reanderList}
     </MainBack>
@@ -215,12 +215,14 @@ const YButton = styled.button`
   font-family: 'Impact';
   margin: 2px;
   padding: 10px;
+  width: 20%;
 `;
 
 const YInput = styled.input`
   padding: 10px;
   margin: 5px 2px;
   border-color: black;
+  width: 60%;
 `;
 
 export default App;
