@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(userList)
+    console.log(userList,"1.")
     setReanderList(userList.map(user => (
       <UserLine
         name={user.name}
@@ -101,6 +101,28 @@ const App: React.FC = () => {
       })
   },[])
 
+  const sortList = useCallback(()=>{
+    console.log(
+      userList.sort((a,b) => {
+        if(a.pt == b.pt)return 0;
+        return a.pt < b.pt ? 1 : -1;
+    }))
+    setUserList(
+      userList.sort((a,b) => {
+        if(a.pt == b.pt)return 0;
+        return a.pt < b.pt ? 1 : -1;
+      })
+    );
+    setReanderList(userList.map(user => (
+      <UserLine
+        name={user.name}
+        pt={user.pt}
+        updateUserData={updateUserData}
+        isSigned={isSigned}
+      />
+    )))
+  },[userList])
+
   return (
     <div>
       {isLoading && <Loading />}
@@ -121,6 +143,10 @@ const App: React.FC = () => {
       <div>
       <button onClick={login}>
         login
+      </button>
+
+      <button onClick={sortList}>
+        sort
       </button>
 
       <button onClick={getAllUserData}>
