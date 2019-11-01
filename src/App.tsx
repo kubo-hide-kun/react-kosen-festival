@@ -1,4 +1,5 @@
 import React,{useState, useEffect, useCallback} from 'react';
+import styled from 'styled-components';
 import Loading from './components/Loading'
 import UserLine from './components/userLine';
 import './App.css';
@@ -44,6 +45,10 @@ const App: React.FC = () => {
 
   const unlockAdmin = useCallback(() => {
     setIsSigned(passwd == 'inu0903');
+    setUser('');
+    setPasswd('');
+    console.log(user);
+    console.log(passwd);
     getAllUserData();
   },[passwd]);
 
@@ -123,39 +128,79 @@ const App: React.FC = () => {
     )))
   },[userList])
 
+  const retireAdmin = useCallback(()=>{
+    setIsSigned(false);
+    getAllUserData();
+  },[]);
+
   return (
-    <div>
+    <MainBack>
       {isLoading && <Loading />}
       <p>
-        Edit <code>src/App.tsx</code> and save to reload.
+        KOSEN FESTIVAL IN 4th INFORMATION
       </p>
       {
         isSigned
         ?[
-          <input type="text" name="name" onChange={e => setUser(e.target.value)}/>,
-          <button onClick={insertUserData}>insert</button>
+          <YInput
+            type="text"
+            name="user"
+            placeholder="追加するユーザーを入力"
+            onChange={e => setUser(e.target.value)}
+          />,
+          <YButton onClick={retireAdmin}>retire admin</YButton>,
+          <YButton onClick={insertUserData}>insert</YButton>
         ]:[
-          <input type="password" name="name" onChange={e => setPasswd(e.target.value)}/>,
-          <button onClick={unlockAdmin}>go to admin</button>
+          <p></p>,
+          <YInput
+            type="password"
+            name="passwd"
+            placeholder="パスワードを入力"
+            onChange={e => setPasswd(e.target.value)}
+          />,
+          <YButton onClick={unlockAdmin}>Get admin</YButton>
         ]
       }
 
       <div>
-      <button onClick={login}>
+      <YButton onClick={login}>
         login
-      </button>
+      </YButton>
 
-      <button onClick={sortList}>
+      <YButton onClick={sortList}>
         sort
-      </button>
+      </YButton>
 
-      <button onClick={getAllUserData}>
+      <YButton onClick={getAllUserData}>
         get user list
-      </button>
+      </YButton>
       </div>
       {reanderList}
-    </div>
+    </MainBack>
   );
 }
+const MainBack = styled.div`
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: yellow
+  z-index: 250
+  font-family: 'arial black'	
+`;
+
+const YButton = styled.button`
+  background: black;
+  color: white;
+  font-family: 'Impact';
+  margin: 2px;
+  padding: 10px;
+`;
+
+const YInput = styled.input`
+  padding: 10px;
+  margin: 5px 2px;
+  border-color: black;
+`;
 
 export default App;
