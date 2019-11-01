@@ -8,7 +8,7 @@ export default class Env {
 
   public readonly firebase: firebase.app.App;
   public readonly firestore: firebase.firestore.Firestore;
-  public providerGoogle = new firebase.auth.GoogleAuthProvider();
+  public readonly providerGoogle = new firebase.auth.GoogleAuthProvider();
 
   private constructor() {
     this.firebase = firebase.initializeApp(FIREBASE_CONFIG);
