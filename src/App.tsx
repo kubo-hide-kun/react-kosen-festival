@@ -1,8 +1,9 @@
 import React,{useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import Loading from './components/Loading'
-import UserLine from './components/userLine';
-import './App.css';
+import UserLine from './components/userLine'
+import PostForm from './components/PostForm'
+import './App.css'
 import Env from "./firebase"
 
 const App: React.FC = () => {
@@ -31,6 +32,10 @@ const App: React.FC = () => {
     ));
   }, [userList]);
 
+  useEffect(() => {
+    getAllUserData();
+  }, []);
+
   const unlockAdmin = useCallback(() => {
     setIsSigned(passwd == 'inuadmin');
     setUser('');
@@ -41,9 +46,10 @@ const App: React.FC = () => {
   },[passwd]);
 
   const deleteUserData = useCallback((name:string)=>{
+    if(!window.confirm(name+"を削除しても良いですか?")) return;
     setIsLoading(true);
     Env.instance.firestore
-      .collection("users")
+      .collection("requests")
       .doc(name)
       .delete()
       .then(() => {
@@ -60,9 +66,9 @@ const App: React.FC = () => {
     setIsLoading(true);
     console.log('Start update =>',name,pt)
     Env.instance.firestore
-      .collection("users")
+      .collection("requests")
       .doc(name)
-      .update({ pt:pt })
+      .update({ Time:new Date() })
       .then(() => {
         console.log("Success: Document has written");
         getAllUserData();
@@ -77,9 +83,9 @@ const App: React.FC = () => {
     setIsLoading(true);
     console.log('Start posting =>',user)
     Env.instance.firestore
-      .collection("users")
-      .doc(user)
-      .set({ pt:0 })
+      .collection("requests")
+      .doc("user")
+      .set({ Time:new Date() })
       .then(() => {
         console.log("Success: Document has written");
         getAllUserData();
@@ -94,7 +100,7 @@ const App: React.FC = () => {
   const getAllUserData = useCallback(()=>{
     setIsLoading(true);
     Env.instance.firestore
-      .collection("users")
+      .collection("requests")
       .get()
       .then(result => {
         setUserList(
@@ -141,33 +147,12 @@ const App: React.FC = () => {
 
   return (
     <MainBack>
-      {isLoading && <Loading />}
-      <p>
-        Vrtual medal
-      </p>
-      {
-        isSigned
-        ?[
-          <YInput
-            type="text"
-            name="user"
-            placeholder="追加するユーザーを入力"
-            onChange={e => setUser(e.target.value)}
-          />,
-          <YButton onClick={insertUserData}>insert</YButton>
-        ]:[
-          <p></p>,
-          <YInput
-            type="password"
-            name="passwd"
-            placeholder="パスワードを入力"
-            onChange={e => setPasswd(e.target.value)}
-          />,
-          <YButton onClick={unlockAdmin}>admin</YButton>
-        ]
-      }
+      {isLoading && <Loading/>}
+      <PostForm />
+      <YButton onClick={insertUserData}>
+        test
+      </YButton>
 
-      <div>
       <YButton onClick={sortList}>
         sort
       </YButton>
@@ -176,7 +161,6 @@ const App: React.FC = () => {
         reload
       </YButton>
       {isSigned && <YButton onClick={retireAdmin}>retire</YButton>}
-      </div>
       {reanderList}
     </MainBack>
   );
@@ -186,7 +170,6 @@ const MainBack = styled.div`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: yellow;
   z-index: 250;
   font-family: 'arial black', sans-serif;
 `;
